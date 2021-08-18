@@ -5,8 +5,8 @@ import axios from "axios";
 class Login extends React.Component {
     state = {
         credentials: {
-            username: '',
-            password: ''
+            username: 'lambda',
+            password: 'school'
         }
     }
 
