@@ -4,31 +4,58 @@ import Loader from "react-loader-spinner";
 import axiosWithAuth from "./../utils/axiosWithAuth";
 
 
-class Friends extends React.Component {
+class FriendsList extends React.Component {
 
     state = {
         friends: []
     }
 
     componentDidMount() {
-
+        this.getData();
     }
 
     getData = () => {
-
+         axiosWithAuth()
+						.get("/friends")
+						.then((res) => {
+							this.setState({
+								friends: res.data.data,
+							});
+						})
+						.catch((err) => {
+							console.log(err);
+						});
     }
 
-    formatData = () => {
-
+    formatData = (friend) => {
+axiosWithAuth()
+            .post("/friends", friend)
+            .then(res => {
+                this.setState({
+                    ...this.state,
+                    friends: res.data
+                })
+            })
+            .catch(err => {
+                console.log(`YO Error: `, err)
     }
 
     render() {
-        const friends = this.formatData()
+        const friends = this.state
         return (
+            <div className="friends-container">
             
-        )
-
-    }
+            {this.state.friends.map(friend => {
+                return <Friend key={friends.id}
+                friend={friend} />
+            })
+        }
+        
+        </div>
+                
+            )
+            
+        }
 
 
 }
